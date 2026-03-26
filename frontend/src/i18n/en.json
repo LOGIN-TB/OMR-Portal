@@ -5,14 +5,14 @@
   "login": {
     "title": "Sign In",
     "email_label": "Email Address",
-    "email_placeholder": "your@email.com",
+    "email_placeholder": "your{'@'}email.com",
     "submit": "Request Login Link",
     "success_title": "Email Sent",
-    "success_message": "We have sent you a login link. Please check your inbox.",
-    "error": "An error occurred. Please try again."
+    "success_message": "We have sent you a login link.",
+    "error": "An error occurred."
   },
   "verify": {
-    "verifying": "Verifying login...",
+    "verifying": "Verifying login",
     "error_title": "Invalid Link",
     "error_message": "The login link is invalid or expired.",
     "back_to_login": "Back to Login"
@@ -45,7 +45,7 @@
     "password_username": "Username",
     "password_reset": "Generate New Password",
     "password_confirm_title": "Reset Password",
-    "password_confirm_message": "The current SMTP password will be permanently replaced. All systems using this password must be updated.",
+    "password_confirm_message": "The current SMTP password will be permanently replaced.",
     "password_new": "New Password",
     "password_copied": "Password copied",
     "config_title": "Connection Settings",
@@ -61,8 +61,8 @@
     "lang_de": "Deutsch",
     "lang_en": "English",
     "notifications_title": "Notifications",
-    "notify_quota_warning": "Quota Warning (80%)",
-    "notify_quota_critical": "Quota Critical (95%)",
+    "notify_quota_warning": "Quota Warning from 80 percent",
+    "notify_quota_critical": "Quota Critical from 95 percent",
     "notify_dns_problem": "DNS Problems",
     "notify_rbl_listing": "RBL Listing",
     "notify_high_bounce": "High Bounce Rate",
@@ -71,10 +71,10 @@
     "logout": "Sign Out"
   },
   "session": {
-    "expiry_warning": "Your session expires in {days} days. Please sign in again."
+    "expiry_warning": "Your session expires soon. Please sign in again."
   },
   "common": {
-    "loading": "Loading...",
+    "loading": "Loading",
     "error": "Error",
     "back": "Back",
     "save": "Save",

@@ -22,7 +22,7 @@ const showWarning = computed(() => {
 <template>
   <div v-if="showWarning" class="session-expiry">
     <Message severity="warn" :closable="false">
-      {{ t('session.expiry_warning', { days: daysUntilExpiry }) }}
+      {{ t('session.expiry_warning') }}
     </Message>
   </div>
 </template>

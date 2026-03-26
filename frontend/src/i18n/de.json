@@ -5,14 +5,14 @@
   "login": {
     "title": "Anmelden",
     "email_label": "E-Mail-Adresse",
-    "email_placeholder": "ihre@email.de",
+    "email_placeholder": "ihre{'@'}email.de",
     "submit": "Login-Link anfordern",
     "success_title": "E-Mail gesendet",
-    "success_message": "Wir haben Ihnen einen Login-Link gesendet. Bitte pruefen Sie Ihr Postfach.",
-    "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+    "success_message": "Wir haben Ihnen einen Login-Link gesendet.",
+    "error": "Ein Fehler ist aufgetreten."
   },
   "verify": {
-    "verifying": "Anmeldung wird geprueft...",
+    "verifying": "Anmeldung wird geprueft",
     "error_title": "Link ungueltig",
     "error_message": "Der Login-Link ist ungueltig oder abgelaufen.",
     "back_to_login": "Zurueck zum Login"
@@ -45,7 +45,7 @@
     "password_username": "Benutzername",
     "password_reset": "Neues Passwort generieren",
     "password_confirm_title": "Passwort zuruecksetzen",
-    "password_confirm_message": "Das aktuelle SMTP-Passwort wird unwiderruflich ersetzt. Alle Systeme, die dieses Passwort verwenden, muessen aktualisiert werden.",
+    "password_confirm_message": "Das aktuelle SMTP-Passwort wird unwiderruflich ersetzt.",
     "password_new": "Neues Passwort",
     "password_copied": "Passwort kopiert",
     "config_title": "Verbindungseinstellungen",
@@ -61,8 +61,8 @@
     "lang_de": "Deutsch",
     "lang_en": "English",
     "notifications_title": "Benachrichtigungen",
-    "notify_quota_warning": "Quota-Warnung (80%)",
-    "notify_quota_critical": "Quota kritisch (95%)",
+    "notify_quota_warning": "Quota-Warnung ab 80 Prozent",
+    "notify_quota_critical": "Quota kritisch ab 95 Prozent",
     "notify_dns_problem": "DNS-Probleme",
     "notify_rbl_listing": "RBL-Listing",
     "notify_high_bounce": "Hohe Bounce-Rate",
@@ -71,10 +71,10 @@
     "logout": "Abmelden"
   },
   "session": {
-    "expiry_warning": "Ihre Sitzung laeuft in {days} Tagen ab. Bitte melden Sie sich erneut an."
+    "expiry_warning": "Ihre Sitzung laeuft bald ab. Bitte melden Sie sich erneut an."
   },
   "common": {
-    "loading": "Laden...",
+    "loading": "Laden",
     "error": "Fehler",
     "back": "Zurueck",
     "save": "Speichern",

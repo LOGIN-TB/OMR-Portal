@@ -6,10 +6,12 @@ import ConfirmDialog from 'primevue/confirmdialog'
 </script>
 
 <template>
-  <Toast />
-  <ConfirmDialog />
-  <SessionExpiry />
-  <RouterView />
+  <div>
+    <Toast />
+    <ConfirmDialog />
+    <SessionExpiry />
+    <RouterView />
+  </div>
 </template>
 
 <style>
