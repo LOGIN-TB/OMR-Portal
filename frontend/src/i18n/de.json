@@ -1,0 +1,85 @@
+{
+  "app": {
+    "title": "spamgo Portal"
+  },
+  "login": {
+    "title": "Anmelden",
+    "email_label": "E-Mail-Adresse",
+    "email_placeholder": "ihre@email.de",
+    "submit": "Login-Link anfordern",
+    "success_title": "E-Mail gesendet",
+    "success_message": "Wir haben Ihnen einen Login-Link gesendet. Bitte pruefen Sie Ihr Postfach.",
+    "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+  },
+  "verify": {
+    "verifying": "Anmeldung wird geprueft...",
+    "error_title": "Link ungueltig",
+    "error_message": "Der Login-Link ist ungueltig oder abgelaufen.",
+    "back_to_login": "Zurueck zum Login"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "no_accounts": "Keine Accounts gefunden.",
+    "server_unreachable": "Server nicht erreichbar"
+  },
+  "account": {
+    "title": "Account Details",
+    "tab_stats": "Statistiken",
+    "tab_dns": "DNS-Status",
+    "tab_password": "SMTP-Passwort",
+    "tab_config": "Konfiguration",
+    "stats_sent": "Gesendet",
+    "stats_deferred": "Verzoegert",
+    "stats_bounced": "Bounced",
+    "stats_rejected": "Rejected",
+    "stats_success_rate": "Erfolgsrate",
+    "stats_24h": "24 Stunden",
+    "stats_30d": "30 Tage",
+    "quota_title": "Quota",
+    "dns_spf": "SPF",
+    "dns_dkim": "DKIM",
+    "dns_dmarc": "DMARC",
+    "dns_recheck": "Erneut pruefen",
+    "dns_suggestion": "Empfehlung",
+    "dns_copy": "Kopieren",
+    "password_username": "Benutzername",
+    "password_reset": "Neues Passwort generieren",
+    "password_confirm_title": "Passwort zuruecksetzen",
+    "password_confirm_message": "Das aktuelle SMTP-Passwort wird unwiderruflich ersetzt. Alle Systeme, die dieses Passwort verwenden, muessen aktualisiert werden.",
+    "password_new": "Neues Passwort",
+    "password_copied": "Passwort kopiert",
+    "config_title": "Verbindungseinstellungen",
+    "config_server": "Server",
+    "config_port": "Port",
+    "config_encryption": "Verschluesselung",
+    "config_starttls": "STARTTLS",
+    "config_download_pdf": "Konfiguration als PDF herunterladen"
+  },
+  "preferences": {
+    "title": "Einstellungen",
+    "language": "Sprache",
+    "lang_de": "Deutsch",
+    "lang_en": "English",
+    "notifications_title": "Benachrichtigungen",
+    "notify_quota_warning": "Quota-Warnung (80%)",
+    "notify_quota_critical": "Quota kritisch (95%)",
+    "notify_dns_problem": "DNS-Probleme",
+    "notify_rbl_listing": "RBL-Listing",
+    "notify_high_bounce": "Hohe Bounce-Rate",
+    "session_title": "Sitzung",
+    "session_expires": "Sitzung laeuft ab am",
+    "logout": "Abmelden"
+  },
+  "session": {
+    "expiry_warning": "Ihre Sitzung laeuft in {days} Tagen ab. Bitte melden Sie sich erneut an."
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Fehler",
+    "back": "Zurueck",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "confirm": "Bestaetigen",
+    "copied": "Kopiert"
+  }
+}

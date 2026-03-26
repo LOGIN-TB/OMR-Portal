@@ -1,0 +1,3 @@
+my.spamgo.de {
+    reverse_proxy portal:8000
+}

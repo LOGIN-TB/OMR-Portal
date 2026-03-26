@@ -1,0 +1,23 @@
+{
+  "relay_servers": [
+    {
+      "id": "relay-prod-1",
+      "name": "relay.spamgo.de",
+      "admin_url": "https://admin.spamgo.de",
+      "api_key": "geheimer-api-key-server1"
+    },
+    {
+      "id": "relay-prod-2",
+      "name": "relay2.spamgo.de",
+      "admin_url": "https://admin2.spamgo.de",
+      "api_key": "geheimer-api-key-server2"
+    }
+  ],
+  "portal": {
+    "smtp_sender": "portal@spamgo.de",
+    "smtp_sender_name": "spamgo Portal",
+    "smtp_server_id": "relay-prod-1",
+    "smtp_username": "portal",
+    "smtp_password": "xxxx-xxxxxx-xxxx"
+  }
+}
