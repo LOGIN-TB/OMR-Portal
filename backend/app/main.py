@@ -7,9 +7,10 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.config import load_config
-from app.database import close_db, init_db
-from app.routers import accounts, auth, dashboard, preferences
+from app.database import close_db, get_db, init_db
+from app.routers import accounts, admin, auth, dashboard, preferences
 from app.services.aggregator import ServerAggregator
+from app.services.config_service import ConfigCache
 from app.services.scheduler import start_scheduler, stop_scheduler
 
 static_dir = Path(__file__).parent.parent / "static"
@@ -19,13 +20,19 @@ static_dir = Path(__file__).parent.parent / "static"
 async def lifespan(app: FastAPI):
     config = load_config()
     app.state.config = config
-    app.state.aggregator = ServerAggregator(config.relay_servers)
     init_db(config)
 
     from app.models import Base
-    from app.database import engine
+    from app.database import engine, async_session_factory
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+
+    config_cache = ConfigCache()
+    async with async_session_factory() as db:
+        await config_cache.load(db)
+
+    app.state.config_cache = config_cache
+    app.state.aggregator = ServerAggregator(config_cache)
 
     start_scheduler(app)
     yield
@@ -47,6 +54,7 @@ app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(dashboard.router, prefix="/api/dashboard", tags=["dashboard"])
 app.include_router(accounts.router, prefix="/api/accounts", tags=["accounts"])
 app.include_router(preferences.router, prefix="/api/preferences", tags=["preferences"])
+app.include_router(admin.router, prefix="/api/admin", tags=["admin"])
 
 if static_dir.exists():
     app.mount("/assets", StaticFiles(directory=str(static_dir / "assets")), name="assets")

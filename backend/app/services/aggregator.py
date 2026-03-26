@@ -22,8 +22,12 @@ class AccountMatch:
 
 
 class ServerAggregator:
-    def __init__(self, servers: list[ServerConfig]):
-        self.servers = servers
+    def __init__(self, config_cache):
+        self._config_cache = config_cache
+
+    @property
+    def servers(self) -> list[ServerConfig]:
+        return self._config_cache.relay_servers
 
     async def lookup_email(self, email: str) -> list[AccountMatch]:
         async with httpx.AsyncClient(timeout=10.0) as client:

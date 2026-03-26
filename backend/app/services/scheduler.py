@@ -68,7 +68,7 @@ async def _check_quotas(app):
     from app.database import async_session_factory
     from app.services.email_service import send_warning
 
-    config = app.state.config
+    config_cache = app.state.config_cache
     aggregator = app.state.aggregator
 
     async with async_session_factory() as db:
@@ -99,7 +99,7 @@ async def _check_quotas(app):
             if not await _should_send(db, user.id, wtype):
                 continue
 
-            await send_warning(config, user.email, wtype, {
+            await send_warning(config_cache, user.email, wtype, {
                 "username": account.username,
                 "server_name": account.server_name,
                 "percentage": f"{pct:.1f}",
@@ -114,7 +114,7 @@ async def _check_dns_and_rbl(app):
     from app.database import async_session_factory
     from app.services.email_service import send_warning
 
-    config = app.state.config
+    config_cache = app.state.config_cache
     aggregator = app.state.aggregator
 
     async with async_session_factory() as db:
@@ -132,7 +132,7 @@ async def _check_dns_and_rbl(app):
                         problems.append(f"{check_type}: {dns[check_type].get('status')}")
 
                 if problems and await _should_send(db, user.id, "dns_problem"):
-                    await send_warning(config, user.email, "dns_problem", {
+                    await send_warning(config_cache, user.email, "dns_problem", {
                         "username": account.username,
                         "server_name": account.server_name,
                         "domain": dns.get("domain", account.mail_domain or ""),
@@ -157,7 +157,7 @@ async def _check_dns_and_rbl(app):
                     )
                     for affected_account, affected_user in affected_result.all():
                         if await _should_send(db, affected_user.id, "rbl_listing"):
-                            await send_warning(config, affected_user.email, "rbl_listing", {
+                            await send_warning(config_cache, affected_user.email, "rbl_listing", {
                                 "server_name": affected_account.server_name,
                                 "server_ip": rbl.get("server_ip", ""),
                                 "listings": rbl.get("listings", []),
@@ -171,7 +171,7 @@ async def _check_bounce_rates(app):
     from app.database import async_session_factory
     from app.services.email_service import send_warning
 
-    config = app.state.config
+    config_cache = app.state.config_cache
     aggregator = app.state.aggregator
 
     async with async_session_factory() as db:
@@ -200,7 +200,7 @@ async def _check_bounce_rates(app):
             if not await _should_send(db, user.id, "high_bounce"):
                 continue
 
-            await send_warning(config, user.email, "high_bounce", {
+            await send_warning(config_cache, user.email, "high_bounce", {
                 "username": account.username,
                 "server_name": account.server_name,
                 "bounce_rate": f"{bounce_rate:.1f}",

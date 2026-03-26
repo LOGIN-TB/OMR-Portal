@@ -76,3 +76,34 @@ class NotificationPreference(Base):
     __table_args__ = (
         UniqueConstraint("portal_user_id", "warning_type", name="uq_user_warning"),
     )
+
+
+class AdminUser(Base):
+    __tablename__ = "admin_users"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    username = Column(String(100), unique=True, nullable=False, index=True)
+    password_hash = Column(String(255), nullable=False)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    last_login = Column(DateTime, nullable=True)
+
+
+class RelayServer(Base):
+    __tablename__ = "relay_servers"
+
+    id = Column(String(50), primary_key=True)
+    name = Column(String(200), nullable=False)
+    admin_url = Column(String(500), nullable=False)
+    api_key = Column(String(500), nullable=False)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+class PortalSetting(Base):
+    __tablename__ = "portal_settings"
+
+    key = Column(String(100), primary_key=True)
+    value = Column(Text, nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

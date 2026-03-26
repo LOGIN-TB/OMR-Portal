@@ -6,7 +6,7 @@ from pathlib import Path
 import aiosmtplib
 from jinja2 import Environment, FileSystemLoader
 
-from app.config import AppConfig, ServerConfig
+from app.config import ServerConfig
 
 logger = logging.getLogger(__name__)
 
@@ -14,25 +14,28 @@ templates_dir = Path(__file__).parent.parent / "templates" / "emails"
 jinja_env = Environment(loader=FileSystemLoader(str(templates_dir)))
 
 
-def _get_smtp_server(config: AppConfig) -> ServerConfig | None:
-    if not config.portal_smtp:
+def _get_smtp_server(config_cache) -> ServerConfig | None:
+    smtp_config = config_cache.portal_smtp
+    if not smtp_config:
         return None
-    for s in config.relay_servers:
-        if s.id == config.portal_smtp.smtp_server_id:
+    for s in config_cache.relay_servers:
+        if s.id == smtp_config.smtp_server_id:
             return s
     return None
 
 
-async def _send_email(config: AppConfig, to_email: str, subject: str, html_body: str):
-    smtp_config = config.portal_smtp
+async def _send_email(config_cache, to_email: str, subject: str, html_body: str):
+    smtp_config = config_cache.portal_smtp
     if not smtp_config:
         logger.error("SMTP not configured")
         return
 
-    smtp_server = _get_smtp_server(config)
+    smtp_server = _get_smtp_server(config_cache)
     if not smtp_server:
         logger.error(f"SMTP server {smtp_config.smtp_server_id} not found")
         return
+
+    port = config_cache.get_setting_int("smtp_port", 587)
 
     msg = MIMEMultipart("alternative")
     msg["From"] = f"{smtp_config.smtp_sender_name} <{smtp_config.smtp_sender}>"
@@ -44,7 +47,7 @@ async def _send_email(config: AppConfig, to_email: str, subject: str, html_body:
         await aiosmtplib.send(
             msg,
             hostname=smtp_server.name,
-            port=587,
+            port=port,
             start_tls=True,
             username=smtp_config.smtp_username,
             password=smtp_config.smtp_password,
@@ -54,8 +57,10 @@ async def _send_email(config: AppConfig, to_email: str, subject: str, html_body:
         logger.error(f"E-Mail-Versand fehlgeschlagen an {to_email}: {e}")
 
 
-async def send_magic_link(config: AppConfig, email: str, token: str, language: str):
-    link = f"{config.base_url}/auth/verify?token={token}"
+async def send_magic_link(config_cache, email: str, token: str, language: str):
+    from app.config import AppConfig
+    base_url = "https://my.spamgo.de"
+    link = f"{base_url}/auth/verify?token={token}"
     template_name = f"magic_link_{language}.html"
     try:
         template = jinja_env.get_template(template_name)
@@ -64,10 +69,10 @@ async def send_magic_link(config: AppConfig, email: str, token: str, language: s
 
     html = template.render(link=link, email=email)
     subject = "Ihr Login bei spamgo" if language == "de" else "Your spamgo login"
-    await _send_email(config, email, subject, html)
+    await _send_email(config_cache, email, subject, html)
 
 
-async def send_warning(config: AppConfig, email: str, warning_type: str, details: dict, language: str):
+async def send_warning(config_cache, email: str, warning_type: str, details: dict, language: str):
     template_name = f"warning_{warning_type}_{language}.html"
     try:
         template = jinja_env.get_template(template_name)
@@ -85,4 +90,4 @@ async def send_warning(config: AppConfig, email: str, warning_type: str, details
         "high_bounce": {"de": "spamgo: Hohe Bounce-Rate", "en": "spamgo: High Bounce Rate"},
     }
     subject = subjects.get(warning_type, {}).get(language, f"spamgo: {warning_type}")
-    await _send_email(config, email, subject, html)
+    await _send_email(config_cache, email, subject, html)

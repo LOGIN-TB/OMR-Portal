@@ -65,7 +65,8 @@ async def request_magic_link(body: MagicLinkRequest, request: Request, db: Async
     await db.commit()
 
     token = await auth_service.create_magic_token(db, email)
-    await email_service.send_magic_link(config, email, token, user.language)
+    config_cache = request.app.state.config_cache
+    await email_service.send_magic_link(config_cache, email, token, user.language)
 
     return MagicLinkResponse(message="ok")
 
